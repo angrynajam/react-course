@@ -1,46 +1,57 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { Component } from 'react';
+
 import Person from './Person/Person';
 
-const App = () => {
-  const [personsState, setPersonsState] = useState({
-    persons: [
-      { name: 'Najam', age: 19 },
-      { name: 'Hizbi', age: 15 },
-      { name: 'Ash', age: 18 },
+class App extends Component {
+  state = {
+    Persons: [
+      { name: 'Najam', id: 1 },
+      { name: 'Hizbi', id: 2 },
+      { name: 'Ash', id: 3 },
     ],
-  });
+    showPersons: true,
+  };
 
-  const [otherState, setOtherState] = useState('some other state');
-
-  const switchNameHandler = () => {
-    setPersonsState({
-      persons: [
-        { name: 'AngryNajam', age: 19 },
-        { name: 'Hizbi', age: 15 },
-        { name: 'Ash', age: 19 },
-      ],
+  togglePersonsHandler = () => {
+    const show = this.state.showPersons;
+    this.setState({
+      showPersons: !show,
     });
   };
 
-  return (
-    <div className="App">
-      <h1>Hello Najam</h1>
-      <button onClick={switchNameHandler}>Switch Name</button>
-      <Person
-        name={personsState.persons[0].name}
-        age={personsState.persons[0].age}
-      />
-      <Person
-        name={personsState.persons[1].name}
-        age={personsState.persons[1].age}
-      />
-      <Person
-        name={personsState.persons[2].name}
-        age={personsState.persons[2].age}
-      />
-    </div>
-  );
-};
+  deletePersonHandler = (index) => {
+    const persons = [...this.state.Persons];
+    persons.splice(index, 1);
+    this.setState({
+      Persons: persons,
+    });
+  };
+
+  render() {
+    let Persons = [];
+    if (this.state.showPersons) {
+      {
+        Persons = this.state.Persons.map((person, index) => {
+          return (
+            <Person
+              name={person.name}
+              key={person.id}
+              clicked={() => this.deletePersonHandler(index)}
+            />
+          );
+        });
+      }
+    }
+
+    return (
+      <div>
+        <button onClick={this.togglePersonsHandler}>
+          {this.state.showPersons ? 'Hide Persons' : 'Show Persons'}
+        </button>
+        <div>{Persons}</div>
+      </div>
+    );
+  }
+}
 
 export default App;

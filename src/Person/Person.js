@@ -1,14 +1,13 @@
 import React from 'react';
+import './Person.css';
 
-const person = (props) => {
+const Person = (props) => {
   return (
-    <div>
-      <p>
-        My Name is {props.name} and i am {props.age} years old
-      </p>
-      <p>{props.children}</p>
+    <div className="card" onClick={props.clicked}>
+      <input type="text" value={props.name}></input>
+      <p>{props.name}</p>
     </div>
   );
 };
 
-export default person;
+export default Person;
