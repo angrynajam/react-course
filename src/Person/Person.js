@@ -3,8 +3,8 @@ import './Person.css';
 
 const Person = (props) => {
   return (
-    <div className="card" onClick={props.clicked}>
-      <input type="text" value={props.name}></input>
+    <div className="card">
+      <input type="text" value={props.name} onChange={props.changed} />
       <p>{props.name}</p>
     </div>
   );
